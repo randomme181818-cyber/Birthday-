@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday 🎂💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  background:linear-gradient(135deg,#ffd6e8,#ffeecf);
+  font-family:Poppins;
+  overflow:hidden;
+}
+
+/* BOX */
+.box{
+  max-width:420px;
+  background:#fff;
+  margin:40px auto;
+  padding:25px;
+  border-radius:22px;
+  text-align:center;
+  display:none;
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+}
+.active{display:block;}
+
+button,input{
+  width:90%;
+  padding:12px;
+  margin-top:15px;
+  border:none;
+  border-radius:25px;
+  font-size:16px;
+}
+button{
+  background:#ff6f91;
+  color:white;
+  cursor:pointer;
+}
+
+/* TEXT */
+#typed{
+  font-family:'Great Vibes';
+  font-size:30px;
+  color:#ff4d6d;
+  min-height:80px;
+}
+
+/* FLOATING EMOJIS */
+.float{
+  position:fixed;
+  bottom:-30px;
+  animation:float 8s linear infinite;
+  pointer-events:none;
+}
+@keyframes float{
+  to{transform:translateY(-120vh);opacity:0;}
+}
+
+/* SLIDESHOW */
+#gallery img{
+  width:100%;
+  border-radius:16px;
+  display:none;
+}
+#gallery img.active{display:block;}
+
+/* BIRTHDAY CARD */
+#card{
+  background:
+    radial-gradient(circle at top,#fff7f0,#ffe6f0),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.05),
+      rgba(255,255,255,0.05) 2px,
+      rgba(0,0,0,0.02) 3px
+    );
+  border-radius:26px;
+  box-shadow:
+    0 0 25px rgba(255,120,150,0.4),
+    0 0 70px rgba(255,190,210,0.6),
+    inset 0 0 40px rgba(255,255,255,0.9);
+  animation:heartbeat 2.8s ease-in-out infinite;
+}
+
+@keyframes heartbeat{
+  0%,100%{
+    box-shadow:
+      0 0 20px rgba(255,120,150,0.35),
+      0 0 55px rgba(255,190,210,0.45),
+      inset 0 0 35px rgba(255,255,255,0.9);
+  }
+  50%{
+    box-shadow:
+      0 0 40px rgba(255,90,130,0.6),
+      0 0 90px rgba(255,170,200,0.75),
+      inset 0 0 45px rgba(255,255,255,1);
+  }
+}
+
+.teddy{
+  font-size:60px;
+  animation:bounce 2s ease-in-out infinite;
+}
+@keyframes bounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 WELCOME SONG -->
+<audio id="welcomeSong" src="welcome.mp3"></audio>
+
+<!-- PAGE 1 -->
+<div class="box active" id="p1">
+  <h2>🎂 Birthday Surprise 🎂</h2>
+  <input type="password" id="pass">
+  <button onclick="go1()">Enter 💖</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="box" id="p2">
+  <div id="typed"></div>
+  <img src="her1.jpg" style="width:100%;border-radius:16px;margin-top:15px;">
+  <button onclick="go2()">Next 🎈</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="box" id="p3">
+  <h2>✨ Some Moments ✨</h2>
+  <div id="gallery">
+    <img src="her2.jpg" class="active">
+    <img src="her3.jpg">
+    <img src="her4.jpg">
+    <img src="her5.jpg">
+  </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="box" id="p4">
+  <h2>🎁 Open Your Birthday Card 🎁</h2>
+  <button onclick="openCard()">Open 💌</button>
+</div>
+
+<!-- PAGE 5 : CARD -->
+<div class="box" id="card">
+  <div class="teddy">🧸🎂</div>
+  <h2 style="font-family:'Great Vibes';color:#ff4d6d;font-size:34px;">
+    My Birthday Girl 💗
+  </h2>
+  <p id="finalText" style="margin-top:20px;line-height:1.7;color:#444;"></p>
+</div>
+
+<script>
+let song=document.getElementById("welcomeSong");
+
+/* FLOATING ANIMATIONS */
+function startAnimations(){
+  setInterval(()=>{
+    const el=document.createElement("div");
+    el.className="float";
+    el.innerHTML=["❤️","⭐","🎈"][Math.floor(Math.random()*3)];
+    el.style.left=Math.random()*100+"vw";
+    el.style.fontSize=(20+Math.random()*25)+"px";
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),8000);
+  },350);
+}
+
+/* PAGE 1 → PAGE 2 + MUSIC */
+function go1(){
+  if(pass.value.trim()==="26feb"){
+    p1.classList.remove("active");
+    p2.classList.add("active");
+
+    startAnimations();
+    startMusic();
+    typeWelcome();
+  } else alert("Wrong password 😕");
+}
+
+/* MUSIC FADE-IN */
+function startMusic(){
+  song.volume=0;
+  song.play();
+  let v=0;
+  let fade=setInterval(()=>{
+    v+=0.03;
+    song.volume=Math.min(v,0.25);
+    if(v>=0.25) clearInterval(fade);
+  },200);
+}
+
+/* TYPED WELCOME */
+function typeWelcome(){
+  const msg="Happy Birthday 🎉✨ Today feels extra special… because you were born 💕";
+  let i=0;typed.innerHTML="";
+  let t=setInterval(()=>{
+    typed.innerHTML+=msg[i++];
+    if(i>=msg.length)clearInterval(t);
+  },90);
+}
+
+/* PAGE 2 → SLIDESHOW */
+function go2(){
+  p2.classList.remove("active");
+  p3.classList.add("active");
+  startSlideshow();
+  setTimeout(()=>{
+    p3.classList.remove("active");
+    p4.classList.add("active");
+  },16000);
+}
+
+/* SLIDESHOW */
+let idx=0;
+function startSlideshow(){
+  setInterval(()=>{
+    const imgs=document.querySelectorAll("#gallery img");
+    imgs.forEach(i=>i.classList.remove("active"));
+    idx=(idx+1)%imgs.length;
+    imgs[idx].classList.add("active");
+  },4000);
+}
+
+/* OPEN CARD + FADE MUSIC OUT */
+function openCard(){
+  p4.classList.remove("active");
+  card.classList.add("active");
+  fadeOutMusic();
+  typeFinal();
+}
+
+/* MUSIC FADE-OUT */
+function fadeOutMusic(){
+  let v=song.volume;
+  let fade=setInterval(()=>{
+    v-=0.03;
+    song.volume=Math.max(v,0);
+    if(v<=0){song.pause();clearInterval(fade);}
+  },200);
+}
+
+/* FINAL MESSAGE */
+function typeFinal(){
+  const text=`Today is special.
+Not because of the date,
+but because it’s the day you were born 🎂💫
+
+I hope today makes you smile more,
+feel lighter,
+and realise how special you are 🌸
+
+Some people quietly become important,
+and you are one of them.
+I’m really glad life crossed our paths 🤍
+
+Happy Birthday 💕
+Stay the same — kind, sweet, and you 🌷`;
+
+  const words=text.replace(/\n\n/g," <br><br> ").replace(/\n/g," <br> ").split(" ");
+  let i=0;finalText.innerHTML="";
+  let t=setInterval(()=>{
+    finalText.innerHTML+=words[i++]+" ";
+    if(i>=words.length)clearInterval(t);
+  },230);
+}
+</script>
+
+</body>
+</html>
