@@ -8,50 +8,35 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
-/* 🌤️ DREAMY LIGHT BLUE BACKGROUND */
+/* 🌤️ VERY LIGHT BLUE BACKGROUND */
 body{
   margin:0;
   min-height:100vh;
   font-family:Poppins;
   overflow:hidden;
-  background:linear-gradient(135deg,#eaf6ff,#f7fcff);
+  background:linear-gradient(135deg,#eaf6ff,#f5fbff);
 }
 
-/* 🧸🎈 CUTE BACKGROUND LAYER */
-.bg-layer{
+/* 🎈 BACKGROUND EMOJIS (IDLE) */
+body::before{
+  content:"🧸 🎂 🎈 🩵 ⭐ 🧁";
   position:fixed;
   inset:0;
-  z-index:0;
-  pointer-events:none;
-  overflow:hidden;
-}
-
-/* 🧸 BACKGROUND ITEMS */
-.bg-item{
-  position:absolute;
   font-size:40px;
-  opacity:0.18;
-  animation:floatBg 18s linear infinite;
+  opacity:0.15;
+  display:flex;
+  flex-wrap:wrap;
+  gap:60px;
+  padding:40px;
+  animation:floatBg 20s linear infinite;
+  pointer-events:none;
 }
-
 @keyframes floatBg{
-  from{transform:translateY(100vh);}
-  to{transform:translateY(-120vh);}
+  from{transform:translateY(0);}
+  to{transform:translateY(-200px);}
 }
 
-/* ✨ SPARKLES */
-.sparkle{
-  position:absolute;
-  font-size:18px;
-  opacity:0.25;
-  animation:twinkle 4s ease-in-out infinite;
-}
-@keyframes twinkle{
-  0%,100%{opacity:0.15;transform:scale(1);}
-  50%{opacity:0.4;transform:scale(1.3);}
-}
-
-/* 📦 CARD */
+/* 📦 CARD CONTAINER */
 .box{
   max-width:420px;
   background:#ffffff;
@@ -60,8 +45,6 @@ body{
   border-radius:24px;
   text-align:center;
   display:none;
-  position:relative;
-  z-index:2;
   box-shadow:0 15px 35px rgba(0,0,0,0.15);
 }
 .active{display:block;}
@@ -92,11 +75,10 @@ button{
 .float{
   position:fixed;
   bottom:-30px;
-  animation:floatUp 8s linear infinite;
+  animation:float 8s linear infinite;
   pointer-events:none;
-  z-index:1;
 }
-@keyframes floatUp{
+@keyframes float{
   to{transform:translateY(-120vh);opacity:0;}
 }
 
@@ -108,9 +90,10 @@ button{
 }
 #gallery img.active{display:block;}
 
-/* 🎁 CARD STYLE */
+/* 🎁 BIRTHDAY CARD */
 #card{
-  background:linear-gradient(180deg,#ffffff,#f2f9ff);
+  background:
+    linear-gradient(180deg,#ffffff,#f2f9ff);
   border-radius:28px;
   box-shadow:
     0 0 25px rgba(120,180,255,0.45),
@@ -132,7 +115,7 @@ button{
   50%{transform:translateY(-10px);}
 }
 
-/* ✨ NAME */
+/* ✨ NAME ANIMATION */
 #name{
   font-family:'Great Vibes';
   font-size:36px;
@@ -148,12 +131,8 @@ button{
 
 <body>
 
-<!-- 🧸 BACKGROUND DECOR -->
-<div class="bg-layer" id="bg"></div>
-
 <!-- 🎵 MUSIC -->
 <audio id="welcomeSong" src="music1.mp3" playsinline></audio>
-
 <!-- PAGE 1 -->
 <div class="box active" id="p1">
   <h2>🎂 Birthday Surprise 🎂</h2>
@@ -164,7 +143,7 @@ button{
 <!-- PAGE 2 -->
 <div class="box" id="p2">
   <div id="typed"></div>
-  <img src="her1.jpg">
+  <img src="her1.jpg" style="width:100%;border-radius:18px;margin-top:15px;">
   <button onclick="go2()">Next 🎈</button>
 </div>
 
@@ -185,7 +164,7 @@ button{
   <button onclick="openCard()">Open 💌</button>
 </div>
 
-<!-- PAGE 5 -->
+<!-- PAGE 5 : CARD -->
 <div class="box" id="card">
   <div class="teddy">🧸🎂</div>
   <div id="name">My Birthday Girl 💙</div>
@@ -195,29 +174,7 @@ button{
 <script>
 let song=document.getElementById("welcomeSong");
 
-/* 🎀 GENERATE BACKGROUND ITEMS */
-const bg=document.getElementById("bg");
-const emojis=["🧸","🎂","🎈","🩵","✨","🧁","⭐"];
-
-for(let i=0;i<25;i++){
-  const e=document.createElement("div");
-  e.className="bg-item";
-  e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
-  e.style.left=Math.random()*100+"vw";
-  e.style.animationDuration=(14+Math.random()*10)+"s";
-  bg.appendChild(e);
-}
-
-for(let i=0;i<20;i++){
-  const s=document.createElement("div");
-  s.className="sparkle";
-  s.innerHTML="✨";
-  s.style.left=Math.random()*100+"vw";
-  s.style.top=Math.random()*100+"vh";
-  bg.appendChild(s);
-}
-
-/* ❤️ FLOATING HEARTS */
+/* 🎈 FLOATING HEARTS */
 function startAnimations(){
   setInterval(()=>{
     const el=document.createElement("div");
@@ -241,10 +198,10 @@ function go1(){
   } else alert("Wrong password 😕");
 }
 
-/* 🎵 MUSIC */
+/* 🎵 MUSIC FADE-IN */
 function startMusic(){
   song.volume=0;
-  song.play().catch(()=>{});
+  song.play();
   let v=0;
   let fade=setInterval(()=>{
     v+=0.03;
@@ -253,7 +210,7 @@ function startMusic(){
   },200);
 }
 
-/* ✍️ TEXT */
+/* ✍️ WELCOME TEXT */
 function typeWelcome(){
   const msg="Happy Birthday 🎉✨ Today feels extra special… because you were born 💙";
   let i=0;typed.innerHTML="";
@@ -263,13 +220,18 @@ function typeWelcome(){
   },90);
 }
 
+/* PAGE 2 → SLIDESHOW */
 function go2(){
   p2.classList.remove("active");
   p3.classList.add("active");
   startSlideshow();
-  setTimeout(()=>{p3.classList.remove("active");p4.classList.add("active");},16000);
+  setTimeout(()=>{
+    p3.classList.remove("active");
+    p4.classList.add("active");
+  },16000);
 }
 
+/* 📸 SLIDESHOW */
 let idx=0;
 function startSlideshow(){
   setInterval(()=>{
@@ -280,19 +242,52 @@ function startSlideshow(){
   },4000);
 }
 
+/* 🎁 OPEN CARD */
 function openCard(){
   p4.classList.remove("active");
   card.classList.add("active");
-  confetti({particleCount:200,spread:100,origin:{y:0.6}});
+  fadeOutMusic();
+  launchConfetti();
   typeFinal();
 }
 
+/* 🎵 MUSIC FADE-OUT */
+function fadeOutMusic(){
+  let v=song.volume;
+  let fade=setInterval(()=>{
+    v-=0.03;
+    song.volume=Math.max(v,0);
+    if(v<=0){song.pause();clearInterval(fade);}
+  },200);
+}
+
+/* 🎉 CONFETTI */
+function launchConfetti(){
+  confetti({
+    particleCount:200,
+    spread:100,
+    origin:{y:0.6}
+  });
+}
+
+/* 💌 FINAL MESSAGE */
 function typeFinal(){
-  const text=`Happy Birthday 🎂💙
-May your day be filled with smiles,
-warm moments,
-and all the love you deserve 🌷✨`;
-  const words=text.replace(/\n/g," <br> ").split(" ");
+  const text=`Today is special.
+Not because of the date,
+but because it’s the day you were born 🎂💫
+
+I hope today makes you smile more,
+feel lighter,
+and realise how special you are 🩵
+
+Some people quietly become important,
+and you are one of them.
+I’m really glad life crossed our paths 🤍
+
+Happy Birthday 🎉
+Stay the same — kind, sweet, and you 🌷`;
+
+  const words=text.replace(/\n\n/g," <br><br> ").replace(/\n/g," <br> ").split(" ");
   let i=0;finalText.innerHTML="";
   let t=setInterval(()=>{
     finalText.innerHTML+=words[i++]+" ";
