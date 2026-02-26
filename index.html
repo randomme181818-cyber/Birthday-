@@ -2,29 +2,50 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday 🎂💖</title>
+<title>Happy Birthday 🎂💙</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
+/* 🌤️ VERY LIGHT BLUE BACKGROUND */
 body{
   margin:0;
   min-height:100vh;
-  background:linear-gradient(135deg,#ffd6e8,#ffeecf);
   font-family:Poppins;
   overflow:hidden;
+  background:linear-gradient(135deg,#eaf6ff,#f5fbff);
 }
 
-/* BOX */
+/* 🎈 BACKGROUND EMOJIS (IDLE) */
+body::before{
+  content:"🧸 🎂 🎈 🩵 ⭐ 🧁";
+  position:fixed;
+  inset:0;
+  font-size:40px;
+  opacity:0.15;
+  display:flex;
+  flex-wrap:wrap;
+  gap:60px;
+  padding:40px;
+  animation:floatBg 20s linear infinite;
+  pointer-events:none;
+}
+@keyframes floatBg{
+  from{transform:translateY(0);}
+  to{transform:translateY(-200px);}
+}
+
+/* 📦 CARD CONTAINER */
 .box{
   max-width:420px;
-  background:#fff;
+  background:#ffffff;
   margin:40px auto;
   padding:25px;
-  border-radius:22px;
+  border-radius:24px;
   text-align:center;
   display:none;
-  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+  box-shadow:0 15px 35px rgba(0,0,0,0.15);
 }
 .active{display:block;}
 
@@ -37,20 +58,20 @@ button,input{
   font-size:16px;
 }
 button{
-  background:#ff6f91;
+  background:#7bbcff;
   color:white;
   cursor:pointer;
 }
 
-/* TEXT */
+/* ✍️ TYPED TEXT */
 #typed{
   font-family:'Great Vibes';
   font-size:30px;
-  color:#ff4d6d;
+  color:#4a90e2;
   min-height:80px;
 }
 
-/* FLOATING EMOJIS */
+/* ❤️ FLOATING HEARTS */
 .float{
   position:fixed;
   bottom:-30px;
@@ -61,47 +82,30 @@ button{
   to{transform:translateY(-120vh);opacity:0;}
 }
 
-/* SLIDESHOW */
+/* 📸 SLIDESHOW */
 #gallery img{
   width:100%;
-  border-radius:16px;
+  border-radius:18px;
   display:none;
 }
 #gallery img.active{display:block;}
 
-/* BIRTHDAY CARD */
+/* 🎁 BIRTHDAY CARD */
 #card{
   background:
-    radial-gradient(circle at top,#fff7f0,#ffe6f0),
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,0.05),
-      rgba(255,255,255,0.05) 2px,
-      rgba(0,0,0,0.02) 3px
-    );
-  border-radius:26px;
+    linear-gradient(180deg,#ffffff,#f2f9ff);
+  border-radius:28px;
   box-shadow:
-    0 0 25px rgba(255,120,150,0.4),
-    0 0 70px rgba(255,190,210,0.6),
+    0 0 25px rgba(120,180,255,0.45),
     inset 0 0 40px rgba(255,255,255,0.9);
-  animation:heartbeat 2.8s ease-in-out infinite;
+  animation:heartbeat 3s ease-in-out infinite;
 }
-
 @keyframes heartbeat{
-  0%,100%{
-    box-shadow:
-      0 0 20px rgba(255,120,150,0.35),
-      0 0 55px rgba(255,190,210,0.45),
-      inset 0 0 35px rgba(255,255,255,0.9);
-  }
-  50%{
-    box-shadow:
-      0 0 40px rgba(255,90,130,0.6),
-      0 0 90px rgba(255,170,200,0.75),
-      inset 0 0 45px rgba(255,255,255,1);
-  }
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.02);}
 }
 
+/* 🧸 TEDDY */
 .teddy{
   font-size:60px;
   animation:bounce 2s ease-in-out infinite;
@@ -110,25 +114,37 @@ button{
   0%,100%{transform:translateY(0);}
   50%{transform:translateY(-10px);}
 }
+
+/* ✨ NAME ANIMATION */
+#name{
+  font-family:'Great Vibes';
+  font-size:36px;
+  color:#4a90e2;
+  animation:nameGlow 2.5s ease-in-out infinite;
+}
+@keyframes nameGlow{
+  0%,100%{text-shadow:0 0 8px #b3d9ff;}
+  50%{text-shadow:0 0 18px #7bbcff;}
+}
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 WELCOME SONG -->
+<!-- 🎵 MUSIC -->
 <audio id="welcomeSong" src="welcome.mp3"></audio>
 
 <!-- PAGE 1 -->
 <div class="box active" id="p1">
   <h2>🎂 Birthday Surprise 🎂</h2>
   <input type="password" id="pass">
-  <button onclick="go1()">Enter 💖</button>
+  <button onclick="go1()">Enter 💙</button>
 </div>
 
 <!-- PAGE 2 -->
 <div class="box" id="p2">
   <div id="typed"></div>
-  <img src="her1.jpg" style="width:100%;border-radius:16px;margin-top:15px;">
+  <img src="her1.jpg" style="width:100%;border-radius:18px;margin-top:15px;">
   <button onclick="go2()">Next 🎈</button>
 </div>
 
@@ -152,21 +168,19 @@ button{
 <!-- PAGE 5 : CARD -->
 <div class="box" id="card">
   <div class="teddy">🧸🎂</div>
-  <h2 style="font-family:'Great Vibes';color:#ff4d6d;font-size:34px;">
-    My Birthday Girl 💗
-  </h2>
+  <div id="name">My Birthday Girl 💙</div>
   <p id="finalText" style="margin-top:20px;line-height:1.7;color:#444;"></p>
 </div>
 
 <script>
 let song=document.getElementById("welcomeSong");
 
-/* FLOATING ANIMATIONS */
+/* 🎈 FLOATING HEARTS */
 function startAnimations(){
   setInterval(()=>{
     const el=document.createElement("div");
     el.className="float";
-    el.innerHTML=["❤️","⭐","🎈"][Math.floor(Math.random()*3)];
+    el.innerHTML=["❤️","🩵","🎈"][Math.floor(Math.random()*3)];
     el.style.left=Math.random()*100+"vw";
     el.style.fontSize=(20+Math.random()*25)+"px";
     document.body.appendChild(el);
@@ -174,19 +188,18 @@ function startAnimations(){
   },350);
 }
 
-/* PAGE 1 → PAGE 2 + MUSIC */
+/* PAGE 1 */
 function go1(){
   if(pass.value.trim()==="26feb"){
     p1.classList.remove("active");
     p2.classList.add("active");
-
     startAnimations();
     startMusic();
     typeWelcome();
   } else alert("Wrong password 😕");
 }
 
-/* MUSIC FADE-IN */
+/* 🎵 MUSIC FADE-IN */
 function startMusic(){
   song.volume=0;
   song.play();
@@ -198,9 +211,9 @@ function startMusic(){
   },200);
 }
 
-/* TYPED WELCOME */
+/* ✍️ WELCOME TEXT */
 function typeWelcome(){
-  const msg="Happy Birthday 🎉✨ Today feels extra special… because you were born 💕";
+  const msg="Happy Birthday 🎉✨ Today feels extra special… because you were born 💙";
   let i=0;typed.innerHTML="";
   let t=setInterval(()=>{
     typed.innerHTML+=msg[i++];
@@ -219,7 +232,7 @@ function go2(){
   },16000);
 }
 
-/* SLIDESHOW */
+/* 📸 SLIDESHOW */
 let idx=0;
 function startSlideshow(){
   setInterval(()=>{
@@ -230,15 +243,16 @@ function startSlideshow(){
   },4000);
 }
 
-/* OPEN CARD + FADE MUSIC OUT */
+/* 🎁 OPEN CARD */
 function openCard(){
   p4.classList.remove("active");
   card.classList.add("active");
   fadeOutMusic();
+  launchConfetti();
   typeFinal();
 }
 
-/* MUSIC FADE-OUT */
+/* 🎵 MUSIC FADE-OUT */
 function fadeOutMusic(){
   let v=song.volume;
   let fade=setInterval(()=>{
@@ -248,7 +262,16 @@ function fadeOutMusic(){
   },200);
 }
 
-/* FINAL MESSAGE */
+/* 🎉 CONFETTI */
+function launchConfetti(){
+  confetti({
+    particleCount:200,
+    spread:100,
+    origin:{y:0.6}
+  });
+}
+
+/* 💌 FINAL MESSAGE */
 function typeFinal(){
   const text=`Today is special.
 Not because of the date,
@@ -256,13 +279,13 @@ but because it’s the day you were born 🎂💫
 
 I hope today makes you smile more,
 feel lighter,
-and realise how special you are 🌸
+and realise how special you are 🩵
 
 Some people quietly become important,
 and you are one of them.
 I’m really glad life crossed our paths 🤍
 
-Happy Birthday 💕
+Happy Birthday 🎉
 Stay the same — kind, sweet, and you 🌷`;
 
   const words=text.replace(/\n\n/g," <br><br> ").replace(/\n/g," <br> ").split(" ");
